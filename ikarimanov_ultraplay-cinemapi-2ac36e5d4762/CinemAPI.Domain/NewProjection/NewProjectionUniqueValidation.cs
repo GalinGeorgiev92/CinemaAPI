@@ -18,7 +18,12 @@ namespace CinemAPI.Domain.NewProjection
 
         public NewProjectionSummary New(IProjectionCreation proj)
         {
-            IProjection projection = projectRepo.Get(proj.MovieId, proj.RoomId, proj.StartDate);
+            IProjection projection = projectRepo.Get(proj.MovieId, proj.RoomId, proj.StartDate, proj.AvailableSeatsCount);
+
+            if (proj.AvailableSeatsCount < 0)
+            {
+                return new NewProjectionSummary(false, "Cannot have negative seat count");
+            }
 
             if (projection != null)
             {

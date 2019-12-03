@@ -6,10 +6,12 @@ namespace CinemAPI.Data
 {
     public interface IProjectionRepository
     {
-        IProjection Get(int movieId, int roomId, DateTime startDate);
+        IProjection Get(int movieId, int roomId, DateTime startDate, int AvailableSeatsCount);
 
         void Insert(IProjectionCreation projection);
 
         IEnumerable<IProjection> GetActiveProjections(int roomId);
+
+        IProjection AvailableSeats(int id);
     }
 }

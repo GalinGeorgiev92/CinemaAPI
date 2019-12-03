@@ -16,11 +16,12 @@ namespace CinemAPI.Data.Implementation
             this.db = db;
         }
 
-        public IProjection Get(int movieId, int roomId, DateTime startDate)
+        public IProjection Get(int movieId, int roomId, DateTime startDate, int availableSeatsCount)
         {
             return db.Projections.FirstOrDefault(x => x.MovieId == movieId &&
                                                       x.RoomId == roomId &&
-                                                      x.StartDate == startDate);
+                                                      x.StartDate == startDate &&
+                                                      x.AvailableSeatsCount == availableSeatsCount);
         }
 
         public IEnumerable<IProjection> GetActiveProjections(int roomId)
@@ -33,10 +34,19 @@ namespace CinemAPI.Data.Implementation
 
         public void Insert(IProjectionCreation proj)
         {
-            Projection newProj = new Projection(proj.MovieId, proj.RoomId, proj.StartDate);
+            Projection newProj = new Projection(proj.MovieId, proj.RoomId, proj.StartDate, proj.AvailableSeatsCount);
 
             db.Projections.Add(newProj);
             db.SaveChanges();
+        }
+
+        public IProjection AvailableSeats(int id)
+        {
+            DateTime now = DateTime.UtcNow;
+
+            var projection = db.Projections.Where(x => x.Id == id && x.StartDate < now).FirstOrDefault();
+
+            return projection;
         }
     }
 }
