@@ -40,7 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAvailableSeatsProjection.cs" />
+    <Compile Include="ICheckSeatsProjection.cs" />
     <Compile Include="INewProjection.cs" />
+    <Compile Include="IReserveSeatsProjection.cs" />
     <Compile Include="Models\NewProjectionSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

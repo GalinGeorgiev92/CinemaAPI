@@ -1,4 +1,5 @@
-﻿using CinemAPI.Domain;
+﻿using CinemAPI.Data.Implementation;
+using CinemAPI.Domain;
 using CinemAPI.Domain.Contracts;
 using CinemAPI.Domain.NewProjection;
 using SimpleInjector;
@@ -11,6 +12,8 @@ namespace CinemAPI.IoCContainer
         public void RegisterServices(Container container)
         {
             container.Register<INewProjection, NewProjectionCreation>();
+            container.Register<IAvailableSeatsProjection, NewProjectionUniqueValidation>();
+            container.Register<IReserveSeatsProjection, NewProjectionReservationCreating>();
             container.RegisterDecorator<INewProjection, NewProjectionMovieValidation>();
             container.RegisterDecorator<INewProjection, NewProjectionUniqueValidation>();
             container.RegisterDecorator<INewProjection, NewProjectionRoomValidation>();

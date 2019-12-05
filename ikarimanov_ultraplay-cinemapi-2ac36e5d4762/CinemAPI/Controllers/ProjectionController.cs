@@ -11,11 +11,14 @@ namespace CinemAPI.Controllers
     {
         private readonly INewProjection newProj;
         private readonly IProjectionRepository projRepo;
+        private readonly IAvailableSeatsProjection availableSeats;
 
-        public ProjectionController(INewProjection newProj, IProjectionRepository projRepo)
+        public ProjectionController(INewProjection newProj, IProjectionRepository projRepo,
+            IAvailableSeatsProjection availableSeats)
         {
             this.newProj = newProj;
             this.projRepo = projRepo;
+            this.availableSeats = availableSeats;
         }
 
         [HttpPost]
@@ -34,18 +37,18 @@ namespace CinemAPI.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet()]
         public IHttpActionResult AvailableSeats(int id)
         {
-            var projection = projRepo.AvailableSeats(id);
+            var seats = availableSeats.AvailableSeats(id);
 
-            if (projection != null)
+            if (seats.IsCreated)
             {
-                return Ok(projection.AvailableSeatsCount);
+                return Ok(seats);
             }
             else
             {
-                return BadRequest("Movie already started");
+                return BadRequest(seats.Message);
             }
         }
     }

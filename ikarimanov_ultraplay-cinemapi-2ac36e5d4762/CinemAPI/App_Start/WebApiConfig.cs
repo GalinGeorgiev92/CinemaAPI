@@ -12,6 +12,12 @@ namespace CinemAPI
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "DefaultId",
+                routeTemplate: "api/{controller}/{action}",
+                defaults: new { action = "Index" }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { action = "Index"}

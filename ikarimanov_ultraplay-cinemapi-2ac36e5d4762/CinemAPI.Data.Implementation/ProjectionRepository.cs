@@ -1,6 +1,8 @@
 ﻿using CinemAPI.Data.EF;
 using CinemAPI.Models;
 using CinemAPI.Models.Contracts.Projection;
+using CinemAPI.Models.Contracts.Reservation;
+using CinemAPI.Models.Contracts.Ticket;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,13 +42,111 @@ namespace CinemAPI.Data.Implementation
             db.SaveChanges();
         }
 
-        public IProjection AvailableSeats(int id)
+        public int AvailableSeats(int id)
         {
             DateTime now = DateTime.UtcNow;
 
-            var projection = db.Projections.Where(x => x.Id == id && x.StartDate < now).FirstOrDefault();
+            var seats = db.Projections.Where(x => x.Id == id && x.StartDate < now)
+                .Select(x => x.AvailableSeatsCount).FirstOrDefault();
 
-            return projection;
+            return seats;
+        }
+
+        public IProjection GetProjectionById(long id)
+        {
+            return db.Projections.FirstOrDefault(x => x.Id == id);
+        }
+
+        public bool CheckReservation(int id, IReservation reservation)
+        {
+            var projection = db.Projections.FirstOrDefault(x => x.Id == id);
+            var tickets = projection.Tickets;
+
+            foreach (var ticket in tickets)
+            {
+                if (ticket.Row == reservation.Row && ticket.Column == reservation.Column)
+                {
+                    return false;
+                }
+            }
+
+            if (projection.Reservations.Count == 0 && !projection.Reservations.Contains(reservation))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public void DecreaseAvailableSeats(int id)
+        {
+            var projection = db.Projections.FirstOrDefault(x => x.Id == id);
+            projection.AvailableSeatsCount--;
+
+            this.db.SaveChanges();
+        }
+
+        public void AddReservation(int id, IReservation reservation)
+        {
+            var projection = db.Projections.FirstOrDefault(x => x.Id == id);
+            projection.Reservations.Add(reservation);
+
+            this.db.SaveChanges();
+        }
+
+        public void RemoveReservation(int id, IReservation reservation)
+        {
+            var projection = db.Projections.FirstOrDefault(x => x.Id == id);
+            projection.Reservations.Remove(reservation);
+
+            this.db.SaveChanges();
+        }
+
+        public void IncreaseAvailableSeats(int id, int count)
+        {
+            var projection = db.Projections.FirstOrDefault(x => x.Id == id);
+            projection.AvailableSeatsCount += count;
+
+            this.db.SaveChanges();
+        }
+
+        public void AddTicket(int id, ITicket ticket)
+        {
+            var projection = db.Projections.FirstOrDefault(x => x.Id == id);
+            projection.Tickets.Add(ticket);
+
+            this.db.SaveChanges();
+        }
+
+        public bool CheckIfSeatAvailable(int id, ITicket ticket)
+        {
+            var projection = db.Projections.FirstOrDefault(x => x.Id == id);
+            var reservations = projection.Reservations;
+
+            foreach (var reservation in reservations)
+            {
+                if (reservation.Row == ticket.Row && reservation.Column == ticket.Column)
+                {
+                    return false;
+                }
+            }
+
+            if (!projection.Tickets.Contains(ticket))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public void RemoveAllReservations(int id)
+        {
+            var projection = this.db.Projections.FirstOrDefault(x => x.Id == id);
+            var count = projection.Reservations.Count();
+            IncreaseAvailableSeats((int)projection.Id, count);
+            projection.Reservations.RemoveAll(x => true);
+
+            this.db.SaveChanges();
         }
     }
 }

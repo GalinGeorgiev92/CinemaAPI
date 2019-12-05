@@ -14,6 +14,11 @@ namespace CinemAPI.Data.Implementation
             this.db = db;
         }
 
+        public ICinema GetById(int id)
+        {
+            return db.Cinemas.FirstOrDefault(x => x.Id == id);
+        }
+
         public ICinema GetByNameAndAddress(string name, string address)
         {
             return db.Cinemas.Where(x => x.Name == name &&

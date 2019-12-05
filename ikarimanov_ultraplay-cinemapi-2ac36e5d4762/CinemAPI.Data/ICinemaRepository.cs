@@ -8,5 +8,8 @@ namespace CinemAPI.Data
         ICinema GetByNameAndAddress(string name, string address);
 
         void Insert(ICinemaCreation cinema);
+
+        ICinema GetById(int id);
+
     }
 }

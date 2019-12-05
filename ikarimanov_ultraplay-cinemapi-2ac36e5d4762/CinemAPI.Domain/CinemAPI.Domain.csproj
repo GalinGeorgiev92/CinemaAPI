@@ -45,7 +45,9 @@
     <Compile Include="NewProjection\NewProjectionCreation.cs" />
     <Compile Include="NewProjection\NewProjectionNextOverlapValidation.cs" />
     <Compile Include="NewProjection\NewProjectionPreviousOverlapValidation.cs" />
+    <Compile Include="NewProjection\NewProjectionSeatValidation.cs" />
     <Compile Include="NewProjection\NewProjectionUniqueValidation.cs" />
+    <Compile Include="NewProjection\NewProjectionReservationCreating.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

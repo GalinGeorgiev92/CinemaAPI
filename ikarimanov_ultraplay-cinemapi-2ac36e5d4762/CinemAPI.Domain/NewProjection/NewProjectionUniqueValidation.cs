@@ -5,10 +5,11 @@ using CinemAPI.Models.Contracts.Projection;
 
 namespace CinemAPI.Domain.NewProjection
 {
-    public class NewProjectionUniqueValidation : INewProjection
+    public class NewProjectionUniqueValidation : INewProjection, IAvailableSeatsProjection
     {
         private readonly IProjectionRepository projectRepo;
         private readonly INewProjection newProj;
+
 
         public NewProjectionUniqueValidation(IProjectionRepository projectRepo, INewProjection newProj)
         {
@@ -31,6 +32,24 @@ namespace CinemAPI.Domain.NewProjection
             }
 
             return newProj.New(proj);
+        }
+
+
+        public NewProjectionSummary AvailableSeats(int id)
+        {
+            var seats = projectRepo.AvailableSeats(id);
+
+            if (seats < 0)
+            {
+                return new NewProjectionSummary(false, "Cannot have negative seat count");
+            }
+
+            if (seats == 0)
+            {
+                return new NewProjectionSummary(false, "There isn't a projection with that Id");
+            }
+
+            return new NewProjectionSummary(true, seats.ToString());
         }
     }
 }
