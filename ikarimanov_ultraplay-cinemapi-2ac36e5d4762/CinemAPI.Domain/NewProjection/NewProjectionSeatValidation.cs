@@ -11,28 +11,30 @@ using System.Threading.Tasks;
 
 namespace CinemAPI.Domain.NewProjection
 {
-    public class NewProjectionSeatValidation
+    public class NewProjectionSeatValidation : IAvailableSeatsProjection
     {
-        private readonly ICheckSeatsProjection newProj;
         private readonly IProjectionRepository projectRepo;
-        private readonly IRoomRepository roomRepo;
 
-        public NewProjectionSeatValidation(ICheckSeatsProjection newProj, IProjectionRepository projectRepo, IRoomRepository roomRepo)
+        public NewProjectionSeatValidation(IProjectionRepository projectRepo)
         {
-            this.newProj = newProj;
             this.projectRepo = projectRepo;
-            this.roomRepo = roomRepo;
         }
-        //public NewProjectionSummary CheckSeat(IReservationCreation proj)
-        //{
-        //    bool result = projectRepo.CheckReservation(proj);
 
-        //    if (result == false)
-        //    {
-        //        return new NewProjectionSummary(false, "Seat is occupied");
-        //    }
+        public NewProjectionSummary AvailableSeats(int id)
+        {
+            var seats = projectRepo.AvailableSeats(id);
 
-        //    return new NewProjectionSummary(true, "Good job!");
-        //}
+            if (seats < 0)
+            {
+                return new NewProjectionSummary(false, "Cannot have negative seat count");
+            }
+
+            if (seats == 0)
+            {
+                return new NewProjectionSummary(false, "There isn't a projection with that Id");
+            }
+
+            return new NewProjectionSummary(true, seats.ToString());
+        }
     }
 }

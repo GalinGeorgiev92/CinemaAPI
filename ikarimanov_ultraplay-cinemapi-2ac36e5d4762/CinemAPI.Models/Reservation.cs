@@ -1,6 +1,7 @@
 ﻿using CinemAPI.Models.Contracts.Reservation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace CinemAPI.Models
         }
 
         public Reservation(DateTime projectionStartDate, string movieName,
-            string cinemaName, int roomNumber, int row, int column)
+            string cinemaName, int roomNumber, int row, int column, int projectionId)
         {
             this.ProjectionStartDate = projectionStartDate;
             this.MovieName = movieName;
@@ -22,9 +23,10 @@ namespace CinemAPI.Models
             this.RoomNumber = roomNumber;
             this.Row = row;
             this.Column = column;
+            this.ProjectionId = projectionId;
         }
 
-        public long Id { get; set; } 
+        public int Id { get; set; } 
 
         public DateTime ProjectionStartDate { get; set; }
 
@@ -37,5 +39,9 @@ namespace CinemAPI.Models
         public int Row { get; set; }
 
         public int Column { get; set; }
+
+        public int ProjectionId { get; set; }
+
+        public Projection Projection { get; set; }
     }
 }

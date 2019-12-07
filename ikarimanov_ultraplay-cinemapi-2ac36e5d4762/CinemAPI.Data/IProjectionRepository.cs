@@ -1,4 +1,5 @@
-﻿using CinemAPI.Models.Contracts.Projection;
+﻿using CinemAPI.Models;
+using CinemAPI.Models.Contracts.Projection;
 using CinemAPI.Models.Contracts.Reservation;
 using CinemAPI.Models.Contracts.Ticket;
 using System;
@@ -16,22 +17,16 @@ namespace CinemAPI.Data
 
         int AvailableSeats(int id);
 
-        IProjection GetProjectionById(long id);
+        IProjection GetProjectionById(int id);
 
-        bool CheckReservation(int id, IReservation reservation);
-
-        bool CheckIfSeatAvailable(int id, ITicket ticket);
+        bool CheckIfSeatIsAvailable(int id, int row, int col);
 
         void DecreaseAvailableSeats(int id);
 
         void IncreaseAvailableSeats(int id, int count);
 
-        void AddReservation(int id, IReservation reservation);
+        void AddTicket(int id, Ticket ticket);
 
-        void RemoveReservation(int id, IReservation reservation);
 
-        void AddTicket(int id, ITicket ticket);
-
-        void RemoveAllReservations(int id);
     }
 }

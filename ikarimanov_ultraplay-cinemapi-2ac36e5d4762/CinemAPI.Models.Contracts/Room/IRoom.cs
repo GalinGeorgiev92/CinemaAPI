@@ -1,6 +1,6 @@
 ﻿namespace CinemAPI.Models.Contracts.Room
 {
-    public interface IRoom
+    public interface ICinema
     {
        int Id { get; }
 

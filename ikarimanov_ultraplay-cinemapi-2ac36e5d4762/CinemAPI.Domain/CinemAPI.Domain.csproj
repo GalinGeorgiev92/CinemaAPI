@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewCinema\NewCinemaCreation.cs" />
+    <Compile Include="NewCinema\NewCinemaUniqueValidation.cs" />
+    <Compile Include="NewMovie\NewMovieCreation.cs" />
+    <Compile Include="NewMovie\NewMovieUniqueValidation.cs" />
     <Compile Include="NewProjection\NewProjectionMovieValidation.cs" />
     <Compile Include="NewProjection\NewProjectionRoomValidation.cs" />
     <Compile Include="NewProjection\NewProjectionCreation.cs" />
@@ -47,7 +51,15 @@
     <Compile Include="NewProjection\NewProjectionPreviousOverlapValidation.cs" />
     <Compile Include="NewProjection\NewProjectionSeatValidation.cs" />
     <Compile Include="NewProjection\NewProjectionUniqueValidation.cs" />
-    <Compile Include="NewProjection\NewProjectionReservationCreating.cs" />
+    <Compile Include="NewReservation\NewReservationCreation.cs" />
+    <Compile Include="NewReservation\NewReservationLateValidation.cs" />
+    <Compile Include="NewReservation\NewReservationProjectionStartingValidation.cs" />
+    <Compile Include="NewReservation\NewReservationProjectionValidation.cs" />
+    <Compile Include="NewReservation\NewReservationSeatValidation.cs" />
+    <Compile Include="NewReservation\NewReservationCheckIfSeatAvailableValidation.cs" />
+    <Compile Include="NewRoom\NewRoomCinemaValidation.cs" />
+    <Compile Include="NewRoom\NewRoomCreation.cs" />
+    <Compile Include="NewRoom\NewRoomUniqueValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,5 +80,6 @@
       <Name>CinemAPI.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

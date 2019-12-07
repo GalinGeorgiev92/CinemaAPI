@@ -10,15 +10,12 @@ namespace CinemAPI.Controllers
     public class ProjectionController : ApiController
     {
         private readonly INewProjection newProj;
-        private readonly IProjectionRepository projRepo;
-        private readonly IAvailableSeatsProjection availableSeats;
+        private readonly IAvailableSeatsProjection availableSeatsProj;
 
-        public ProjectionController(INewProjection newProj, IProjectionRepository projRepo,
-            IAvailableSeatsProjection availableSeats)
+        public ProjectionController(INewProjection newProj, IAvailableSeatsProjection availableSeatsProj)
         {
             this.newProj = newProj;
-            this.projRepo = projRepo;
-            this.availableSeats = availableSeats;
+            this.availableSeatsProj = availableSeatsProj;
         }
 
         [HttpPost]
@@ -37,18 +34,18 @@ namespace CinemAPI.Controllers
             }
         }
 
-        [HttpGet()]
+        [HttpGet]
         public IHttpActionResult AvailableSeats(int id)
         {
-            var seats = availableSeats.AvailableSeats(id);
+            var numberOfSeats = availableSeatsProj.AvailableSeats(id);
 
-            if (seats.IsCreated)
+            if (numberOfSeats.IsCreated)
             {
-                return Ok(seats);
+                return Ok(numberOfSeats);
             }
             else
             {
-                return BadRequest(seats.Message);
+                return BadRequest(numberOfSeats.Message);
             }
         }
     }

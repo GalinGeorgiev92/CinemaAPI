@@ -19,5 +19,7 @@ namespace CinemAPI.Models.Contracts.Ticket
         int Row { get; }
 
         int Column { get; }
+
+        int ProjectionId { get; }
     }
 }

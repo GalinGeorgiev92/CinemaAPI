@@ -13,14 +13,19 @@ namespace CinemAPI.Data.EF.ModelConfigurations
     {
         public void Configure(DbModelBuilder modelBuilder)
         {
-            EntityTypeConfiguration<Ticket> cinemaModel = modelBuilder.Entity<Ticket>();
-            cinemaModel.HasKey(model => model.Id);
-            cinemaModel.Property(model => model.ProjectionStartDate).IsRequired();
-            cinemaModel.Property(model => model.MovieName).IsRequired();
-            cinemaModel.Property(model => model.CinemaName).IsRequired();
-            cinemaModel.Property(model => model.RoomNumber).IsRequired();
-            cinemaModel.Property(model => model.Row).IsRequired();
-            cinemaModel.Property(model => model.Column).IsRequired();
+            EntityTypeConfiguration<Ticket> ticketModel = modelBuilder.Entity<Ticket>();
+            ticketModel.HasKey(model => model.Id);
+            ticketModel.Property(model => model.ProjectionStartDate).IsRequired();
+            ticketModel.Property(model => model.MovieName).IsRequired();
+            ticketModel.Property(model => model.CinemaName).IsRequired();
+            ticketModel.Property(model => model.RoomNumber).IsRequired();
+            ticketModel.Property(model => model.Row).IsRequired();
+            ticketModel.Property(model => model.Column).IsRequired();
+
+            ticketModel
+                 .HasRequired(x => x.Projection)
+                 .WithMany(t => t.Tickets)
+                 .HasForeignKey(f => f.ProjectionId);
         }
     }
 }

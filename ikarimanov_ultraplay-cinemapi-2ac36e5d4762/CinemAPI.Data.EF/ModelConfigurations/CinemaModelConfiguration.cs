@@ -12,6 +12,9 @@ namespace CinemAPI.Data.EF.ModelConfigurations
             cinemaModel.HasKey(model => model.Id);
             cinemaModel.Property(model => model.Name).IsRequired();
             cinemaModel.Property(model => model.Address).IsRequired();
+
+            cinemaModel
+                .HasMany(r => r.Rooms).WithRequired();
         }
     }
 }

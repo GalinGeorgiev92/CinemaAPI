@@ -8,7 +8,7 @@ namespace CinemAPI.Models.Contracts.Ticket
 {
     public interface ITicket
     {
-        long Id { get; }
+        int Id { get; }
 
         DateTime ProjectionStartDate { get; }
 
@@ -21,5 +21,7 @@ namespace CinemAPI.Models.Contracts.Ticket
         int Row { get; }
 
         int Column { get; }
+
+        int ProjectionId { get; }
     }
 }

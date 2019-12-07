@@ -14,5 +14,7 @@ namespace CinemAPI.Data
         IReservation GetById(int id);
 
         void RemoveReservation(int id);
+
+        void RemoveAllReservations(int id);
     }
 }

@@ -14,13 +14,13 @@ namespace CinemAPI.Data.Implementation
             this.db = db;
         }
 
-        public IRoom GetByCinemaAndNumber(int cinemaId, int number)
+        public ICinema GetByCinemaAndNumber(int cinemaId, int number)
         {
             return db.Rooms.FirstOrDefault(x => x.CinemaId == cinemaId &&
                                                 x.Number == number);
         }
 
-        public IRoom GetById(int id)
+        public ICinema GetById(int id)
         {
             return db.Rooms.FirstOrDefault(x => x.Id == id);
         }

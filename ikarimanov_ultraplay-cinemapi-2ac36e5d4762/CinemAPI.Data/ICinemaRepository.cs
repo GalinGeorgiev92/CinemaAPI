@@ -10,6 +10,5 @@ namespace CinemAPI.Data
         void Insert(ICinemaCreation cinema);
 
         ICinema GetById(int id);
-
     }
 }

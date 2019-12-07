@@ -40,12 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAvailableSeatsProjection.cs" />
-    <Compile Include="ICheckSeatsProjection.cs" />
-    <Compile Include="INewProjection.cs" />
-    <Compile Include="IReserveSeatsProjection.cs" />
+    <Compile Include="CinemaModels\INewCinema.cs" />
+    <Compile Include="MovieModels\INewMovie.cs" />
+    <Compile Include="ProjectionModels\IAvailableSeatsProjection.cs" />
+    <Compile Include="ProjectionModels\ICheckSeatsProjection.cs" />
+    <Compile Include="ProjectionModels\INewProjection.cs" />
     <Compile Include="Models\NewProjectionSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReservationModel\INewReservation.cs" />
+    <Compile Include="RoomModels\INewRoom.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CinemAPI.Models.Contracts\CinemAPI.Models.Contracts.csproj">

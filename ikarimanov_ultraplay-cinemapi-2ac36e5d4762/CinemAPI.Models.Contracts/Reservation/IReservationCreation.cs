@@ -19,5 +19,7 @@ namespace CinemAPI.Models.Contracts.Reservation
         int Row { get; }
 
         int Column { get; }
+
+        int ProjectionId { get; }
     }
 }

@@ -28,7 +28,7 @@ namespace CinemAPI.Data.Implementation
         public void Insert(ITicketCreation ticket)
         {
             Ticket newTicket = new Ticket(ticket.ProjectionStartDate, ticket.MovieName,
-                ticket.CinemaName, ticket.RoomNumber, ticket.Row, ticket.Column);
+                ticket.CinemaName, ticket.RoomNumber, ticket.Row, ticket.Column, ticket.ProjectionId);
 
             db.Tickets.Add(newTicket);
 

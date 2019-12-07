@@ -30,13 +30,6 @@ namespace CinemAPI.Data.Implementation
         public IReservation GetById(int id)
         {
             var reservation = this.db.Reservations.FirstOrDefault(x => x.Id == id);
-            if(reservation != null)
-            {
-                this.projRepo.RemoveReservation(id, reservation);
-                this.projRepo.IncreaseAvailableSeats(id, 1);
-                this.db.Reservations.Remove(reservation);
-                this.db.SaveChanges();
-            }
 
             return reservation;
         }
@@ -44,9 +37,21 @@ namespace CinemAPI.Data.Implementation
         public void Insert(IReservationCreation reservation)
         {
             Reservation newReservation = new Reservation(reservation.ProjectionStartDate, reservation.MovieName,
-                reservation.CinemaName, reservation.RoomNumber, reservation.Row, reservation.Column);
+                reservation.CinemaName, reservation.RoomNumber, reservation.Row, reservation.Column, reservation.ProjectionId);
 
             db.Reservations.Add(newReservation);
+            
+            this.db.SaveChanges();
+        }
+
+        public void RemoveAllReservations(int id)
+        {
+            var reservations = this.db.Reservations.Where(x => x.Id == id);
+
+            foreach (var reservation in reservations)
+            {
+                this.db.Reservations.Remove(reservation);
+            }
 
             this.db.SaveChanges();
         }

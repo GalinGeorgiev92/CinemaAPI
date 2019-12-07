@@ -8,7 +8,7 @@ namespace CinemAPI.Models.Contracts.Reservation
 {
     public interface IReservation
     {
-        long Id { get; }
+        int Id { get; }
 
         DateTime ProjectionStartDate { get; }
 
@@ -21,5 +21,7 @@ namespace CinemAPI.Models.Contracts.Reservation
         int Row { get; }
 
         int Column { get; }
+
+        int ProjectionId { get; }
     }
 }

@@ -12,6 +12,9 @@ namespace CinemAPI.Data.EF.ModelConfigurations
             movieModel.HasKey(model => model.Id);
             movieModel.Property(model => model.Name).IsRequired();
             movieModel.Property(model => model.DurationMinutes).IsRequired();
+
+            movieModel
+                .HasMany(p => p.Projections).WithRequired();
         }
     }
 }

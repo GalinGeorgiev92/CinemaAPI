@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CinemAPI.Models
 {
-    public class Room : IRoom, IRoomCreation
+    public class Room : ICinema, IRoomCreation
     {
         public Room()
         {
@@ -32,6 +32,5 @@ namespace CinemAPI.Models
         public virtual Cinema Cinema { get; set; }
 
         public virtual ICollection<Projection> Projections { get; set; }
-
     }
 }

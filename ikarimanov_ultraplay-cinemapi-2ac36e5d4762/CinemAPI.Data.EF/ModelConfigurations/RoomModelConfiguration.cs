@@ -14,6 +14,12 @@ namespace CinemAPI.Data.EF.ModelConfigurations
             roomModel.Property(model => model.Rows).IsRequired();
             roomModel.Property(model => model.SeatsPerRow).IsRequired();
             roomModel.Property(model => model.CinemaId).IsRequired();
+            roomModel.HasMany(p => p.Projections).WithRequired();
+
+            roomModel
+                .HasRequired(c => c.Cinema)
+                .WithMany(r => r.Rooms)
+                .HasForeignKey(x => x.CinemaId);
         }
     }
 }

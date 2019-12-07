@@ -2,8 +2,8 @@
 {
     public interface ICinemaCreation
     {
-        string Name { get; set; }
+        string Name { get; }
 
-        string Address { get; set; }
+        string Address { get; }
     }
 }

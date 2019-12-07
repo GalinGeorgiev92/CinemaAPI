@@ -19,7 +19,7 @@ namespace CinemAPI.Domain.NewProjection
 
         public NewProjectionSummary New(IProjectionCreation proj)
         {
-            IRoom room = roomRepo.GetById(proj.RoomId);
+            ICinema room = roomRepo.GetById(proj.RoomId);
 
             if (room == null)
             {

@@ -34,17 +34,21 @@ namespace CinemAPI.Controllers
         public IHttpActionResult Index(TicketCreationModel model)
         {
             var projection = this.projRepo.GetProjectionById(model.ProjectionId);
-            var movie = movieRepo.GetById(projection.MovieId);
-            var room = roomRepo.GetById(projection.RoomId);
+            if (projection == null)
+            {
+                return BadRequest("No such projection exists");
+            }
+
+            var movie = this.movieRepo.GetById(projection.MovieId);
+            var room = this.roomRepo.GetById(projection.RoomId);
             var cinema = this.cinemaRepo.GetById(room.CinemaId);
 
-            if (model.Row < 0 || model.Row > room.SeatsPerRow && model.Column < 0 || model.Column > room.Rows)
+            if (model.Row < 0 || model.Row > room.SeatsPerRow || model.Column < 0 || model.Column > room.Rows)
             {
                 return BadRequest("Seat does not exist in the room");
             }
 
             var time = DateTime.UtcNow;
-
             if (time > projection.StartDate)
             {
                 return BadRequest("Movie already started");
@@ -52,20 +56,16 @@ namespace CinemAPI.Controllers
 
             if (time.AddMinutes(10) >= projection.StartDate)
             {
-                projRepo.RemoveAllReservations(model.ProjectionId);
+                reservationRepo.RemoveAllReservations(model.ProjectionId);
             }
 
-            var ticket = new Ticket(projection.StartDate, movie.Name,
-                     cinema.Name, room.Number, model.Row, model.Column);
+            var available = this.projRepo.CheckIfSeatIsAvailable(model.ProjectionId, model.Row, model.Column);
 
-            var seat = this.projRepo.CheckIfSeatAvailable(model.ProjectionId, ticket);
-
-            if (seat == true)
+            if (available == true)
             {
                 this.ticketRepo.Insert(new Ticket(projection.StartDate, movie.Name,
-                    cinema.Name, room.Number, model.Row, model.Column));
+                    cinema.Name, room.Number, model.Row, model.Column, projection.Id));
                 this.projRepo.DecreaseAvailableSeats(model.ProjectionId);
-                this.projRepo.AddTicket(model.ProjectionId, ticket);
 
                 return Ok("Ticket Bought!");
             }

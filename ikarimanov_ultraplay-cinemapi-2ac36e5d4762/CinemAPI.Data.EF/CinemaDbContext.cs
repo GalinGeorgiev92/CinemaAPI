@@ -37,6 +37,7 @@ namespace CinemAPI.Data.EF
                 new ProjectionModelConfiguration(),
                 new RoomModelConfiguration(),
                 new ReservationModelConfiguration(),
+                new TicketModelConfiguration()
             };
 
             foreach (IModelConfiguration configurationModel in modelConfigurations)

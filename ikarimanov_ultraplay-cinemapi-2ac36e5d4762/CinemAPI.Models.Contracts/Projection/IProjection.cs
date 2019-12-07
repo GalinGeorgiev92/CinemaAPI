@@ -5,7 +5,7 @@ namespace CinemAPI.Models.Contracts.Projection
 {
     public interface IProjection
     {
-        long Id { get; }
+        int Id { get; }
 
         int RoomId { get; }
 
